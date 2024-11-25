@@ -2,14 +2,14 @@
 #' 
 #' @param K - Necessary Input. Number of cohorts. Should be a numeric positive integer.
 #' @param Z_names - Necessary Input. A character vector containing the names of the Z variables or disease model covariates.
-#' @param intdata_list - Necessary Input. A list of size K where each element of list corresponds to the data for each of the K multiple cohorts including the disease indicator D, the Z variables and the selection variables in the disease model. Each data should be of the form of a data frame.
+#' @param intdata_list - Necessary Input. A list of size K where each element of list corresponds to the data for each of the K multiple cohorts including the disease indicator D, the Z variables and the selection variables in the disease model. Each data should be of the form of a data frame. Please include a column named "id" to indicate unique identifiers to the units.
 #' @param N - Target Population Size.
 #' @param UW_CS - An indicator variable (TRUE or FALSE) for using the unweighted logistic regression model with cohort-specific intercepts.
 #' @param IPW - An indicator variable (TRUE or FALSE) for using the Inverse Probability Weighted Methods (IPW) methods.
 #' @param weights_user - User specified weights. A numeric vector of weights for the combined data (not duplicated).
 #' @param AIPW - An indicator variable (TRUE or FALSE) for using the Joint Augmented IPW method. If AIPW is TRUE, please also input IPW to be TRUE.
 #' @param ipw_method - If IPW is TRUE, specify the IPW method to be used. A character variable. Default is PL (Pseudolikelihood). Other options are Simplex Regression (SR), Calibration (CL) or User Specified (US).
-#' @param extdata - If IPW method is set to PL or SR or AIPW is TRUE, please provide a data frame containing individual level external data which is a probability sample like NHANES. The external data should contain all the selection variables and if AIPW is TRUE, then also all the auxiliary score model variables. 
+#' @param extdata - If IPW method is set to PL or SR or AIPW is TRUE, please provide a data frame containing individual level external data which is a probability sample like NHANES. The external data should contain all the selection variables and if AIPW is TRUE, then also all the auxiliary score model variables.  Please include a column named "id" to indicate unique identifiers to the units.
 #' @param marginals_list - If IPW method is set to CL, please provide a list of size K in which each element is a numeric vector containing the marginal sums of the selection variables of each of the K cohorts. Please ensure the first element for each of the K numeric vector should be the population size, N. 
 #' @param select_var_list - If IPW is set to be TRUE, please provide a list of size K in which each element is a character vector corresponding to the selection variables' names for each of the K cohorts.
 #' @param aux_var_list - If AIPW is set to be TRUE, please provide a list of size K in which each element is a character vector corresponding to the auxiliary score model variables' names for each of the K cohorts.
