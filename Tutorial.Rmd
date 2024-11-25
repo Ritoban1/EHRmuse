@@ -8,7 +8,7 @@ date: "2024-11-25"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This R package, MUSE implements Joint Inverse Probability Weighted (JIPW) and Joint Augmented Inverse Probability Weighted (JAIPW) methods to address selection bias in multiple non-probability samples, such as Electronic Health Records (EHRs). These methods leverage data integration techniques, incorporating either individual-level data or summary-level statistics from external sources, to improve the estimation of association parameters in binary disease risk models.
+This R package, MUSE implements Joint Inverse Probability Weighted (JIPW) and Joint Augmented Inverse Probability Weighted (JAIPW) methods to address selection bias in non-probability samples, such as Electronic Health Records (EHRs). These methods leverage data integration techniques, incorporating either individual-level data or summary-level statistics from external sources, to improve the estimation of association parameters in binary disease risk models.
 
 Selection bias poses significant challenges when working with EHR data, particularly when participants are recruited from multiple clinics or centers, each with distinct and potentially outcome-dependent selection mechanisms. Standard inverse-probability-weighted (IPW) methods, which rely on parametric selection models, often suffer from inaccuracies due to model misspecification in such settings.
 
@@ -18,7 +18,7 @@ The JAIPW method enhances robustness by integrating individual-level data from m
 Let \(D\) be a binary disease indicator, and let \(\boldsymbol{Z}\) denote a set of covariates. The primary disease model of interest in the target population is: 
 
 \[
-\text{logit}(P(D=1|\boldsymbol{Z})) = \theta_0 + \boldsymbol{\theta}_{\boldsymbol{Z}} \boldsymbol{Z}.
+\text{logit}(P(D=1|\boldsymbol{Z})) = \theta_0 + \boldsymbol{\theta}_{\boldsymbol{Z}}' \boldsymbol{Z}.
 \]
 
 We analyze data from \(K\) internal non-probability samples (cohorts) drawn from the same target population. Each cohort \(k\) (\(k = 1, 2, \ldots, K\)) is characterized by a binary selection indicator \(S_k\), which represents inclusion in the cohort. For each cohort \(k\), \(\boldsymbol{Z}_{1k}\) denotes the subset of covariates that appear exclusively in the disease model and do not directly influence the corresponding selection indicator \(S_k\). \(\boldsymbol{Z}_{2k}\) includes covariates shared by both the disease and selection models. Across all cohorts, the set of covariates \(\boldsymbol{Z}\) is the union of \(\boldsymbol{Z}_{1k}\) and \(\boldsymbol{Z}_{2k}\). Additionally, \(\boldsymbol{W}_k\) represents variables specific to the selection model for cohort \(k\), which can vary across cohorts. The probability of selection into cohort \(k\), given covariates, is modeled as \(P(S_k=1|\boldsymbol{X}_k) = \pi_k(\boldsymbol{X}_k)\), where \(\boldsymbol{X}_k\) includes \(D\), \(\boldsymbol{Z}_{2k}\), and \(\boldsymbol{W}_k\).
@@ -45,7 +45,7 @@ source("MUSE_wrap.R") ## main function
 ```{r,eval=FALSE}
 ## Unweighted Logistic Method with variance estimate
 
-res_uw=MUSE_func(K=K,N=N,Z_names=Z_names,
+res_uw=MUSE(K=K,N=N,Z_names=Z_names,
                  intdata_list=intdata_list,variance = TRUE)
 res_uw
 
@@ -59,7 +59,7 @@ res_uw
 ```{r,eval=FALSE}
 ## Approximate variance
 
-res_pl= MUSE_func(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+res_pl= MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
               select_var_list=select_var_list,
               extdata=extdata,Weights_e = 1/extdata$Select_Weights,
               variance = TRUE,ipw_method ="PL")
@@ -87,7 +87,7 @@ source("Data_gen_marg.R")
 
 ```{r,eval=FALSE}
 
-res_cl=MUSE_func(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+res_cl=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
             select_var_list=select_var_list,
             marginals_list = margs,
             variance =TRUE,ipw_method = "CL")
@@ -98,7 +98,7 @@ res_cl=MUSE_func(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
 
 ```{r,eval=FALSE}
 
-res_aipw=MUSE_func(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+res_aipw=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
               select_var_list=select_var_list,aux_var_list=aux_var_list,
               extdata=extdata,Weights_e = 1/extdata$Select_Weights,
               variance = TRUE,ipw_method ="PL",AIPW=TRUE)

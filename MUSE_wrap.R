@@ -1,5 +1,5 @@
-#' Title
-#'
+#' IPW and AIPW Methods for Multi-cohort Selection Bias in Non-probability Samples
+#' 
 #' @param K - Necessary Input. Number of cohorts. Should be a numeric positive integer.
 #' @param Z_names - Necessary Input. A character vector containing the names of the Z variables or disease model covariates.
 #' @param intdata_list - Necessary Input. A list of size K where each element of list corresponds to the data for each of the K multiple cohorts including the disease indicator D, the Z variables and the selection variables in the disease model. Each data should be of the form of a data frame.
@@ -21,8 +21,11 @@
 #' @return
 #' @export
 #'
-#' @examples
-MUSE_func<-function(K,Z_names,intdata_list,
+#' @examples source("Data_gen_indi.R")
+#' source("MUSE_wrap.R")
+#' res_uw=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
+#' 
+MUSE<-function(K,Z_names,intdata_list,
                     N=NULL,
                     UW_CS=FALSE,
                     IPW=FALSE,
