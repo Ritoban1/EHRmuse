@@ -25,7 +25,7 @@
 #' source("MUSE_wrap.R")
 #' res_uw=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
 #' 
-MUSE<-function(K,Z_names,intdata_list,
+EHR_MuSe<-function(K,Z_names,intdata_list,
                     N=NULL,
                     UW_CS=FALSE,
                     IPW=FALSE,
