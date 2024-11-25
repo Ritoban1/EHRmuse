@@ -1,41 +1,120 @@
-AIPW_joint<-function(D_int,Z_1_int,
-                     Z_n_1_int,W_int,
-                     D_ext,
-                     Z_n_1_ext,W_ext,
-                     Weights_e,
-                     estweights_est,aux_model,start){
-  
-  if (!is.numeric(D_int) || !is.vector(D_int))
-    stop("'D_int must be a numeric vector.")
-  
-  if (!is.numeric(D_ext) || !is.vector(D_ext))
-    stop("'D_ext must be a numeric vector.")
-  
-  # Check select_k_var and select_k_e to be data frames or not
-  if (!is.data.frame(Z_1_int)) stop("Z_1_int must be a data frame.")
-  
-  if (!is.data.frame(Z_n_1_int)) stop("Z_n_1_int must be a data frame.")
-  
-  if (!is.data.frame(W_int)) stop("W_int must be a data frame.")
-  
-  if (!is.data.frame(Z_n_1_ext)) stop("Z_n_1_ext must be a data frame.")
-  
-  if (!is.data.frame(W_ext)) stop("W_ext must be a data frame.")
-  
-  ## Estimated weights for the combined internal data
-  if (!is.numeric(estweights_est) || !is.vector(estweights_est))
-    stop("estweights_est must be a numeric vector.")
-  
-  ## Sample weights for the external data
-  if (!is.numeric(Weights_e) || !is.vector(Weights_e))
-    stop("estweights_est must be a numeric vector.")
-  
-  if(aux_model=="XGBoost"){
+AIPW_joint<-function(K,N,intdata_list,extdata,
+                     select_var_list,
+                     aux_var_list,
+                     Weights_e,Z_names,
+                     aux_model="XGBoost",ipw_method="PL",
+                     marginals_list=NULL,
+                     weights_user=NULL){
+ 
+  if(ipw_method=="PL"){
+    source("PL_estimation_code_better.R")
     
-     extpred1=matrix(0,length(D_ext),ncol(Z_1_int))
-     intpred1=matrix(0,length(D_int),ncol(Z_1_int))
-     
-     prop_xg<-function(theta_vec){
+    IPW_est=PL_est_multi_cohort(K,intdata_list,extdata,
+                                select_var_list,Weights_e,Z_names)
+
+    wts=IPW_est$combined_weights
+    intdata_comb=NULL
+    comb_est_weights=NULL
+    start=IPW_est$final_est
+    select_var_comb_name=NULL
+    aux_var_comb_name=NULL
+    for(i in 1:K){
+      intdata=intdata_list[[i]]
+      if (!is.data.frame(intdata)) stop("All Internal data should be a data frame.")
+      intdata_comb=rbind.data.frame(intdata_comb,intdata)
+      comb_est_weights=c(comb_est_weights,wts[[i]])
+      select_var_comb_name=union(select_var_comb_name,select_var_list[[i]])
+      aux_var_comb_name=union(aux_var_comb_name,aux_var_list[[i]])
+    }
+    intdata_comb1=intdata_comb[!duplicated(intdata_comb$id),]
+    estweights_est=comb_est_weights[!duplicated(intdata_comb$id)]
+    
+    
+  }else if(ipw_method=="SR"){
+    source("SR_estimation_code_better.R")
+    
+    IPW_est=SR_est_var_multi_cohort(K,intdata_list,extdata,
+                                    select_var_list,Weights_e,Z_names)
+
+    wts=IPW_est$combined_weights
+    intdata_comb=NULL
+    comb_est_weights=NULL
+    start=IPW_est$final_est
+    select_var_comb_name=NULL
+    aux_var_comb_name=NULL
+    for(i in 1:K){
+      intdata=intdata_list[[i]]
+      if (!is.data.frame(intdata)) stop("All Internal data should be a data frame.")
+      intdata_comb=rbind.data.frame(intdata_comb,intdata)
+      comb_est_weights=c(comb_est_weights,wts[[i]])
+      select_var_comb_name=union(select_var_comb_name,select_var_list[[i]])
+      aux_var_comb_name=union(aux_var_comb_name,aux_var_list[[i]])
+    }
+    intdata_comb1=intdata_comb[!duplicated(intdata_comb$id),]
+    estweights_est=comb_est_weights[!duplicated(intdata_comb$id)]
+    
+
+  }else if(ipw_method=="CL"){
+    source("CL_estimation_code_better.R")
+    IPW_est=CL_est_multi_cohort(K,intdata_list,select_var_list,
+                                marginals_list,Z_names)
+    wts=IPW_est$combined_weights
+    intdata_comb=NULL
+    comb_est_weights=NULL
+    start=IPW_est$final_est
+    select_var_comb_name=NULL
+    
+    aux_var_comb_name=NULL
+    for(i in 1:K){
+      intdata=intdata_list[[i]]
+      if (!is.data.frame(intdata)) stop("All Internal data should be a data frame.")
+      intdata_comb=rbind.data.frame(intdata_comb,intdata)
+      comb_est_weights=c(comb_est_weights,wts[[i]])
+      select_var_comb_name=union(select_var_comb_name,select_var_list[[i]])
+      aux_var_comb_name=union(aux_var_comb_name,aux_var_list[[i]])
+    }
+    intdata_comb1=intdata_comb[!duplicated(intdata_comb$id),]
+    estweights_est=comb_est_weights[!duplicated(intdata_comb$id)]
+  }else if(ipw_method=="US"){
+    estweights_est=weights_users
+    intdata_comb=NULL
+    aux_var_comb_name=NULL
+    for(i in 1:K){
+      intdata=intdata_list[[i]]
+      if (!is.data.frame(intdata)) stop("All Internal data should be a data frame.")
+      intdata_comb=rbind.data.frame(intdata_comb,intdata)
+      aux_var_comb_name=union(aux_var_comb_name,aux_var_list[[i]])
+    }
+    intdata_comb1=intdata_comb[!duplicated(intdata_comb$id),]
+    weight_us=weighted(intdata=intdata_comb1,
+                       estweights=estweights_est,Z_names=Z_names)
+    start=weight_us$final
+  }
+  
+  
+  D_int=intdata_comb1$D
+  D_ext=extdata$D
+  Z_1_int_name=setdiff(Z_names,aux_var_comb_name)
+  Z_n_1_name=setdiff(Z_names,Z_1_int_name)
+  W_name=setdiff(aux_var_comb_name,Z_names)
+  
+  Z_1_int=intdata_comb1%>%
+    dplyr::select(Z_1_int_name)
+  Z_n_1_int=intdata_comb1%>%
+    dplyr::select(Z_n_1_name)
+  Z_n_1_ext=extdata%>%
+    dplyr::select(Z_n_1_name)
+  
+  W_int=intdata_comb1%>%
+    dplyr::select(W_name)
+  W_ext=extdata%>%
+    dplyr::select(W_name)
+  
+ if(aux_model=="XGBoost"){
+    
+    prop_xg<-function(theta_vec){
+      extpred1=matrix(0,length(D_ext),ncol(Z_1_int))
+      intpred1=matrix(0,length(D_int),ncol(Z_1_int))
       N_Z=1+ncol(Z_1_int)+ncol(Z_n_1_int)
       y1=c(rep(0,times=N_Z))
       for(d in 1:ncol(Z_1_int)){
@@ -43,15 +122,14 @@ AIPW_joint<-function(D_int,Z_1_int,
                                                     Z_1_int,
                                       Z_n_1_int)) %*% theta_vec)))
         
-        xgb_int1=xgb.DMatrix(data=data.matrix(cbind(D_int,Z_n_1_int,
+        xgb_int1=xgb.DMatrix(data=data.matrix(cbind(Z_n_1_int,
                                                     W_int)),
                              label=response1)
-        colnames(xgb_int1)[1]="D"
         xgbc1=xgboost(data=xgb_int1,max.depth=3,nrounds=100,verbose = 0)
         
-        xgb_ext=xgb.DMatrix(data=data.matrix(cbind(D_ext,Z_n_1_ext,
+        xgb_ext=xgb.DMatrix(data=data.matrix(cbind(Z_n_1_ext,
                                                    W_ext)))
-        colnames(xgb_ext)[1]="D"
+  
         extpred1[,d]=predict(xgbc1,xgb_ext)
         intpred1[,d]=predict(xgbc1,xgb_int1)
         
@@ -62,16 +140,18 @@ AIPW_joint<-function(D_int,Z_1_int,
                                     Z_n_1_int)) %*% theta_vec)))
       
       
-      xgb_int2=xgb.DMatrix(data=data.matrix(cbind(D_int,Z_n_1_int,
+      xgb_int2=xgb.DMatrix(data=data.matrix(cbind(Z_n_1_int,
                                                   W_int)),
                            label=response2)
-      colnames(xgb_int2)[1]="D"
       xgbc2=xgboost(data=xgb_int2,max.depth=3,nrounds=100,verbose = 0)
-      xgb_ext=xgb.DMatrix(data=data.matrix(cbind(D_ext,Z_n_1_ext,
+      xgb_ext=xgb.DMatrix(data=data.matrix(cbind(Z_n_1_ext,
                                                  W_ext)))
-      colnames(xgb_ext)[1]="D"
       extpred2=predict(xgbc2,xgb_ext)
       intpred2=predict(xgbc2,xgb_int2)
+      
+
+      
+      #####
       
       for(i in 1:length(D_ext)){
         vec=c(as.numeric(extpred2[i]),as.numeric(extpred1[i,]),
@@ -95,37 +175,12 @@ AIPW_joint<-function(D_int,Z_1_int,
      }
      start=as.numeric(start)
      z = nleqslv(x=start, fn=prop_xg,method="Newton",
-                 global = "dbldog",control=list(trace=1,allowSingular=TRUE))
-     return(z$x)
+                 global = "dbldog",control=list(trace=1,allowSingular=TRUE),
+                 jacobian = TRUE)
+     return(list(est=z$x,jac=z$jac,estweights_est=wts,start=start,
+                 init_var=IPW_est$variance_est))
       
-    }
+  }
+  
+  
 }
- 
-estweights_est=comb_est_weights1
-
-D_int=intdata_comb1$D
-Z_1_int=data.frame(intdata_comb1$Z1)
-Z_n_1_int=intdata_comb1%>%
-  dplyr::select("Z2","Z3")
-
-W_int=intdata_comb1%>%
-  dplyr::select("W_1","W_2","W_3")
-
-D_ext=extdata$D
-
-Z_n_1_ext=extdata%>%
-  dplyr::select("Z2","Z3")
-
-W_ext=extdata%>%
-  dplyr::select("W_1","W_2","W_3")
-Weights_e=1/extdata$Select_Weights
-aux_model="XGBoost"
-start=weighted(intdata_comb1,comb_est_weights1)
-AIPW_joint(D_int,Z_1_int,
-                     Z_n_1_int,W_int,
-                     D_ext,
-                     Z_n_1_ext,W_ext,
-                     Weights_e,
-                     estweights_est,aux_model,start)
-
-
