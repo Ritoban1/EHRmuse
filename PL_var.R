@@ -113,18 +113,20 @@ variance_pl_actual<-function(K,N,intdata_list,extdata,select_var_list,Weights_e,
     temp[c(1:length(x_1)),c(1:length(x_1))]=as.numeric(1/(ext_indi_wt_list[[1]][i])
                                                        *(1-1/(ext_indi_wt_list[[1]][i])))*
                                         x_1%*%t(x_1)
+   if(K>1){
+     for(j in 2:K){
+       x=extdata %>%
+         dplyr::select(select_var_list[[j]])
+       x=as.numeric(c(1,x[i,]))
+       
+       temp[c((cum_length[j-1]+1):(cum_length[j])),
+            c((cum_length[j-1]+1):(cum_length[j]))]=
+         as.numeric(1/(ext_indi_wt_list[[j]][i])
+                    *(1-1/(ext_indi_wt_list[[j]][i])))*
+         x%*%t(x)
+     }
+   }
     
-    for(j in 2:K){
-     x=extdata %>%
-        dplyr::select(select_var_list[[j]])
-     x=as.numeric(c(1,x[i,]))
-     
-     temp[c((cum_length[j-1]+1):(cum_length[j])),
-          c((cum_length[j-1]+1):(cum_length[j]))]=
-       as.numeric(1/(ext_indi_wt_list[[j]][i])
-                  *(1-1/(ext_indi_wt_list[[j]][i])))*
-           x%*%t(x)
-    }
     
     H=H+temp*Weights_e[i]
   }
@@ -274,8 +276,5 @@ variance_pl_actual<-function(K,N,intdata_list,extdata,select_var_list,Weights_e,
   V = V/N_est
   return(list(final_est=wts_fun$final_est,var_est=diag(V)))
 }
-pl_var=variance_pl_actual(K=3,N=N,intdata_list=intdata_list,extdata=extdata,
-                          select_var_list=select_var_list,
-                          Weights_e=1/extdata$Select_Weights,
-                          Z_names=c("Z1","Z2","Z3"))
+
 

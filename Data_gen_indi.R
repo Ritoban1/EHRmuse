@@ -134,6 +134,6 @@ aux_var_list=list(c("D","W_1","Z2","Z3"),c("D","W_2","Z3"),c("W_3","Z2"))
 
 ## list of internal data
 intdata_list=list(intdata1,intdata2,intdata3)
-
 ## names of Z variables
 Z_names=c("Z1","Z2","Z3")
+

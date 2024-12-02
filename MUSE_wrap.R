@@ -23,7 +23,7 @@
 #'
 #' @examples source("Data_gen_indi.R")
 #' source("MUSE_wrap.R")
-#' res_uw=EHR_MuSe(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
+#' res_uw=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
 #' 
 EHR_MuSe<-function(K,Z_names,intdata_list,
                     N=NULL,
@@ -56,8 +56,8 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
     stop("The input for data for different cohorts
          should be in a list of length K")
   
-  if(!is.vector(Z_names)||!is.character(Z_names)||length(Z_names)!=K)
-    stop("Z_ names should be a character vector of length K")
+  if(!is.vector(Z_names)||!is.character(Z_names))
+    stop("Z_names should be a character vector")
   
   if(IPW==FALSE){
     if(AIPW==TRUE){
@@ -98,7 +98,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         if(!is.numeric(N)||!(N>0))
           stop("N, population size should be a positive integer.")
         
-        source("PL_estimation_code_better.R")
+        source("PL_estimation.R")
         
         if(variance==TRUE){
           if(!is.character(type_var))
@@ -140,7 +140,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         if(!is.numeric(N)||!(N>0))
           stop("N, population size should be a positive integer.")
         
-        source("SR_estimation_code_better.R")
+        source("SR_estimation.R")
         
         if(variance==TRUE){
           print("Only approx method of variance is available for SR")
@@ -166,7 +166,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         if(!is.numeric(N)||!(N>0))
           stop("N, population size should be a positive integer.")
         
-        source("CL_estimation_code_better.R")
+        source("CL_estimation.R")
         
         if(variance==TRUE){
           if(!is.character(type_var))
@@ -269,7 +269,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
                                            weights_user)
         return(list(est=var_AIPW$est,var=var_AIPW$var))
       }else{
-        source("AIPW_estimation_code_better.R")
+        source("AIPW_estimation.R")
         AIPW_est=AIPW_joint(K,N,intdata_list,extdata,
                             select_var_list,
                             aux_var_list,

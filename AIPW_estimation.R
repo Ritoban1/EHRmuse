@@ -7,7 +7,7 @@ AIPW_joint<-function(K,N,intdata_list,extdata,
                      weights_user=NULL){
  
   if(ipw_method=="PL"){
-    source("PL_estimation_code_better.R")
+    source("PL_estimation.R")
     
     IPW_est=PL_est_multi_cohort(K,intdata_list,extdata,
                                 select_var_list,Weights_e,Z_names)
@@ -31,7 +31,7 @@ AIPW_joint<-function(K,N,intdata_list,extdata,
     
     
   }else if(ipw_method=="SR"){
-    source("SR_estimation_code_better.R")
+    source("SR_estimation.R")
     
     IPW_est=SR_est_var_multi_cohort(K,intdata_list,extdata,
                                     select_var_list,Weights_e,Z_names)
@@ -55,7 +55,7 @@ AIPW_joint<-function(K,N,intdata_list,extdata,
     
 
   }else if(ipw_method=="CL"){
-    source("CL_estimation_code_better.R")
+    source("CL_estimation.R")
     IPW_est=CL_est_multi_cohort(K,intdata_list,select_var_list,
                                 marginals_list,Z_names)
     wts=IPW_est$combined_weights

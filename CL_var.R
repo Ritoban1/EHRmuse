@@ -106,18 +106,20 @@ variance_cl_actual<-function(K,N,intdata_list,
     temp[c(1:length(x_1)),c(1:length(x_1))]=ind_list[[1]][i]*as.numeric((estweights_indi[[1]][i])
                                                        *(1-1/(estweights_indi[[1]][i])))*
                                            x_1%*%t(x_1)
-    
-    for(j in 2:K){
-      x=intdata_comb1 %>%
-        dplyr::select(select_var_list[[j]])
-      x=as.numeric(c(1,x[i,]))
-      
-      temp[c((cum_length[j-1]+1):(cum_length[j])),
-           c((cum_length[j-1]+1):(cum_length[j]))]=
-        ind_list[[j]][i]*as.numeric((estweights_indi[[j]][i])
-                                    *(1-1/(estweights_indi[[j]][i])))*
-        x%*%t(x)
+    if(K>1){
+      for(j in 2:K){
+        x=intdata_comb1 %>%
+          dplyr::select(select_var_list[[j]])
+        x=as.numeric(c(1,x[i,]))
+        
+        temp[c((cum_length[j-1]+1):(cum_length[j])),
+             c((cum_length[j-1]+1):(cum_length[j]))]=
+          ind_list[[j]][i]*as.numeric((estweights_indi[[j]][i])
+                                      *(1-1/(estweights_indi[[j]][i])))*
+          x%*%t(x)
+      }
     }
+    
     H=H+temp
   }
   H= -H/N_est
