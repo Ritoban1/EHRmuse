@@ -1,0 +1,30 @@
+Type: Package
+Package: EHRmuse
+Title: Multi-cohort Selection Bias Correction
+Version: 0.0.2.0
+Authors@R: c(
+    person("Ritoban", "Kundu", , "kundur@umich.edu", role = c("aut", "cre"))
+  )
+Description: A set of tools for correcting selection bias in multi-cohort studies 
+    using IPW and AIPW methods. Includes weighted and unweighted logistic regression models 
+    and various variance estimation techniques.
+License: MIT + file LICENSE
+URL: https://https://github.com/Ritoban1/EHR-MuSe
+BugReports: https://https://github.com/Ritoban1/EHR-MuSe/issues
+Depends:
+    R (>= 4.0.0)
+Imports:
+    dplyr (>= 1.0.0),
+    nleqslv (>= 3.3.2),
+    xgboost (>= 1.4.1),
+    survey (>= 4.1.0),
+    MASS (>= 7.3-55),
+    stats,
+    nnet (>= 7.3-17),
+    simplexreg (>= 0.1.6)
+VignetteBuilder:
+    knitr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

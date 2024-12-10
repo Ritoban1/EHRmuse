@@ -21,8 +21,7 @@
 #' @return
 #' @export
 #'
-#' @examples source("Data_gen_indi.R")
-#' source("MUSE_wrap.R")
+#' @examples
 #' res_uw=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
 #' 
 EHR_MuSe<-function(K,Z_names,intdata_list,
@@ -40,12 +39,12 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
                     aux_model="XGBoost",
                     variance=FALSE,
                     type_var="approx"){
-  require(nleqslv)
-  require(xgboost)
-  require(simplexreg)
-  require(survey)
-  require(dplyr)
-  require(nnet)
+  # require(nleqslv)
+  # require(xgboost)
+  # require(simplexreg)
+  # require(survey)
+  # require(dplyr)
+  # require(nnet)
   
   print("Please rename the outcome variable to be D.")
   
@@ -64,7 +63,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
       stop("Please set both IPW and AIPW to be true to use AIPW")
     }
     if(UW_CS==FALSE){
-      source("Unweighted.R")
+      # source("Unweighted.R")
       est_uw=unweighted(K,intdata_list,Z_names)
       if(variance==TRUE){
         return(list(est=est_uw$est,var=est_uw$var))
@@ -72,7 +71,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         return(est_uw$est)
       }
     }else{
-      source("Unweighted_cohort_specific.R")
+      # source("Unweighted_cohort_specific.R")
       est_uw=unweighted_cs(K,intdata_list,Z_names)
       if(variance==TRUE){
         return(list(est=est_uw$est,var=est_uw$var))
@@ -98,14 +97,14 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         if(!is.numeric(N)||!(N>0))
           stop("N, population size should be a positive integer.")
         
-        source("PL_estimation.R")
+        # source("PL_estimation.R")
         
         if(variance==TRUE){
           if(!is.character(type_var))
             stop("if variance is true for PL method, please choose asy or approx.")
           
           if(type_var=="asy"){
-            source("PL_var.R")
+            # source("PL_var.R")
             
             est_PL_var=variance_pl_actual(K,N,intdata_list,extdata,select_var_list,Weights_e,Z_names)
             
@@ -140,7 +139,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         if(!is.numeric(N)||!(N>0))
           stop("N, population size should be a positive integer.")
         
-        source("SR_estimation.R")
+        # source("SR_estimation.R")
         
         if(variance==TRUE){
           print("Only approx method of variance is available for SR")
@@ -166,14 +165,14 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
         if(!is.numeric(N)||!(N>0))
           stop("N, population size should be a positive integer.")
         
-        source("CL_estimation.R")
+        # source("CL_estimation.R")
         
         if(variance==TRUE){
           if(!is.character(type_var))
             stop("if variance is true for CL method, please choose asy or approx.")
           
           if(type_var=="asy"){
-            source("CL_var.R")
+            # source("CL_var.R")
             
             est_CL_var=variance_cl_actual(K,N,intdata_list,
                                           select_var_list,marginals_list,Z_names)
@@ -259,7 +258,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
       }
       
      if(variance==TRUE){
-        source("AIPW_var_approx.R")
+        # source("AIPW_var_approx.R")
         var_AIPW=AIPW_var_approx(K,N,intdata_list,extdata,
                                            select_var_list,
                                            aux_var_list,
@@ -269,7 +268,7 @@ EHR_MuSe<-function(K,Z_names,intdata_list,
                                            weights_user)
         return(list(est=var_AIPW$est,var=var_AIPW$var))
       }else{
-        source("AIPW_estimation.R")
+        # source("AIPW_estimation.R")
         AIPW_est=AIPW_joint(K,N,intdata_list,extdata,
                             select_var_list,
                             aux_var_list,

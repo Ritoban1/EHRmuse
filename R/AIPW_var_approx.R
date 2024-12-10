@@ -6,7 +6,7 @@ AIPW_var_approx<-function(K,N,intdata_list,extdata,
                           ipw_method="PL",
                           marginals_list=NULL,
                           weights_user=NULL){
-  source("AIPW_estimation.R")
+  # source("AIPW_estimation.R")
   
   est_AIPW=AIPW_joint(K=K,N=N,intdata_list=intdata_list,
                       extdata=extdata,

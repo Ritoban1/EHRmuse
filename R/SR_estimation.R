@@ -90,7 +90,7 @@ SR_wt_multi_cohort <- function(K,intdata_list,extdata,select_var_list,Weights_e)
   return(list(combined_weights = comb_est_weights_list))
 }
 
-source("weighted.R")
+# source("weighted.R")
 
 SR_est_var_multi_cohort <- function(K,intdata_list,extdata,
                                     select_var_list,Weights_e,Z_names,
