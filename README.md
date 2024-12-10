@@ -52,25 +52,25 @@ We analyze data from $K$ internal non-probability samples (cohorts)
 drawn from the same target population. Each cohort $k$
 ($k = 1, 2, \ldots, K$) is characterized by a binary selection indicator
 $S_k$, which represents inclusion in the cohort. For each cohort $k$,
-$\mathbf{Z}_{1k}$ denotes the subset of covariates that appear
+$Z_{1k}$ denotes the subset of covariates that appear
 exclusively in the disease model and do not directly influence the
-corresponding selection indicator $S_k$. $\mathbf{Z}_{2k}$ includes
+corresponding selection indicator $S_k$. $Z_{2k}$ includes
 covariates shared by both the disease and selection models. Across all
 cohorts, the set of covariates $\mathbf{Z}$ is the union of
-$\mathbf{Z}_{1k}$ and $\mathbf{Z}_{2k}$. Additionally,
-$\mathbf{W}_k$ represents variables specific to the selection model
+$Z_{1k}$ and $Z_{2k}$. Additionally,
+$W_k$ represents variables specific to the selection model
 for cohort $k$, which can vary across cohorts. The probability of
 selection into cohort $k$, given covariates, is modeled as
-$P(S_k=1|\mathbf{X}_k) = \pi_k(\mathbf{X}_k)$, where
-$\mathbf{X}_k$ includes $D$, $\mathbf{Z}_{2k}$, and
-$\mathbf{W}_k$.
+$P(S_k=1|X_k) = \pi_k(X_k)$, where
+$X_k$ includes $D$, $Z_{2k}$, and
+$W_k$.
 
 ## Data Generation
 
 The data is generated using the R script **“Data_gen_indi.R”**. For this
 example, we set the number of cohorts to $K = 3$, the population size to
 $N = 50{,}000$, and the dimension of the covariate vector to
-$\text{dim}(\mathbf{Z}) = 3$. Different selection mechanisms are
+$\text{dim}(Z) = 3$. Different selection mechanisms are
 employed for the three cohorts to reflect cohort-specific variability.
 Additionally, we simulated individual-level external data to evaluate
 the methods JPL, JSR, and JAIPW, and generated marginal totals for JCL.
