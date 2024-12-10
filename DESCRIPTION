@@ -9,8 +9,8 @@ Description: A set of tools for correcting selection bias in multi-cohort studie
     using IPW and AIPW methods. Includes weighted and unweighted logistic regression models 
     and various variance estimation techniques.
 License: MIT + file LICENSE
-URL: https://https://github.com/Ritoban1/EHR-MuSe
-BugReports: https://https://github.com/Ritoban1/EHR-MuSe/issues
+URL: https://https://github.com/Ritoban1/EHRmuse
+BugReports: https://https://github.com/Ritoban1/EHRmuse/issues
 Depends:
     R (>= 4.0.0)
 Imports:

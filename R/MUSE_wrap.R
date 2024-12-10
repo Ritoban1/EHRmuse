@@ -18,7 +18,8 @@
 #' @param variance - An indicator variable (TRUE or FALSE) whether variance should be computed or not, along with the point estimate.
 #' @param type_var - If variance is true, indicate the method type to be used for computing the variance. For the unweighted method, do not provide any type. For IPW methods, PL and CL, we have two options, asy (asymptotic variance incorporating the variance from nuisance parameters) and "approx" ignoring the variance from nuisance parameters. For SR and AIPW, we have only the approx method. The default for IPW and AIPW methods is approx.
 #'
-#' @return
+#' @return If variance=TRUE, it will return a list of estimate vector and variance vector.
+#' If variance=FALSE, it will return an estimate vector.
 #' @export
 #'
 #' @examples
