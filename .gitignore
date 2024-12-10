@@ -1,0 +1,54 @@
+# R-specific files and directories
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Packrat and renv (dependency management tools)
+packrat/
+renv/library/
+renv/staging/
+renv/python/
+
+# Compiled code and temporary files
+*.o
+*.so
+*.dll
+
+# Mac-specific files
+.DS_Store
+
+# Log files and temporary files
+*.log
+*.out
+*.swp
+*.tmp
+
+# Ignored directories
+inst/doc/
+vignettes/*.html
+vignettes/*.pdf
+.Rproj.user/
+.Rbuildignore
+.Rinstignore
+
+# Testing files
+tests/testthat/test-results/
+
+# R markdown files
+*_cache/
+*_files/
+
+# GitHub Actions artifacts
+.github/
+*.Rcheck/
+
+# R package build output
+*.tar.gz
+*.zip
+
+# IDE-specific files
+.Rproj.user/
+.Rproj.history
+.Rstudio/
+.idea/
