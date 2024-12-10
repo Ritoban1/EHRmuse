@@ -36,7 +36,8 @@ to address selection bias in non-probability samples, such as Electronic
 Health Records (EHRs). These methods leverage data integration
 techniques, incorporating either individual-level data or summary-level
 statistics from external sources, to improve the estimation of
-association parameters in binary disease risk models. The link to the methods paper is: https://arxiv.org/abs/2412.00228.
+association parameters in binary disease risk models. The link to the methods paper is: 
+https://arxiv.org/abs/2412.00228.
 
 Selection bias poses significant challenges when working with EHR data,
 particularly when participants are recruited from multiple clinics or
