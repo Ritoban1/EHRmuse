@@ -22,9 +22,9 @@
 #' @export
 #'
 #' @examples
-#' res_uw=MUSE(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
+#' res_uw=EHRmuse(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,variance = TRUE)
 #' 
-EHR_MuSe<-function(K,Z_names,intdata_list,
+EHRmuse<-function(K,Z_names,intdata_list,
                     N=NULL,
                     UW_CS=FALSE,
                     IPW=FALSE,
