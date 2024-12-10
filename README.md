@@ -17,7 +17,7 @@ install.packages("EHRmuse")
 pak::pak("Ritoban1/EHRmuse")
 ```
 
-This R package, EHR-MuSe implements Joint Inverse Probability Weighted
+This R package, EHRmuse implements Joint Inverse Probability Weighted
 (JIPW) and Joint Augmented Inverse Probability Weighted (JAIPW) methods
 to address selection bias in non-probability samples, such as Electronic
 Health Records (EHRs). These methods leverage data integration
@@ -223,7 +223,7 @@ At first, we implement an unweighted logistic method.
 ``` r
 ## Unweighted Logistic Method with variance estimate
 
-res_uw=EHR_MuSe(K=K,N=N,Z_names=Z_names,
+res_uw=EHRmuse(K=K,N=N,Z_names=Z_names,
                  intdata_list=intdata_list,variance = TRUE)
 res_uw
 
@@ -237,7 +237,7 @@ res_uw
 ``` r
 ## Approximate variance
 
-res_pl= EHR_MuSe(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+res_pl= EHRmuse(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
               select_var_list=select_var_list,
               extdata=extdata,Weights_e = 1/extdata$Select_Weights,
               variance = TRUE,ipw_method ="PL")
@@ -245,7 +245,7 @@ res_pl
 
 ## Asymptotic variance
 
-# res_pl= EHR_MuSe_func(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+# res_pl= EHRmuse(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
 #               select_var_list=select_var_list,
 #               extdata=extdata,Weights_e = 1/extdata$Select_Weights,
 #               variance = TRUE,ipw_method ="PL", type_var = "asy")
@@ -391,7 +391,7 @@ Z_names=c("Z1","Z2","Z3")
 
 ``` r
 
-res_cl=EHR_MuSe(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+res_cl=EHRmuse(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
             select_var_list=select_var_list,
             marginals_list = margs,
             variance =TRUE,ipw_method = "CL")
@@ -401,7 +401,7 @@ res_cl=EHR_MuSe(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
 
 ``` r
 
-res_aipw=EHR_MuSe(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
+res_aipw=EHRmuse(K=K,N=N,Z_names=Z_names,intdata_list=intdata_list,IPW=TRUE,
               select_var_list=select_var_list,aux_var_list=aux_var_list,
               extdata=extdata,Weights_e = 1/extdata$Select_Weights,
               variance = TRUE,ipw_method ="PL",AIPW=TRUE)
