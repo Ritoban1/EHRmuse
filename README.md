@@ -145,7 +145,7 @@ simu_ext<-function(data,gamma_ext){
                         gamma_ext[3] * data$Z1 +
                         gamma_ext[4]* data$Z2 +
                         gamma_ext[5] * data$Z3)
-  S_e  <- ifelse(SELECT > U2e, T, F)
+  S_e  <- ifelse(SELECT > U2e, TRUE, FALSE)
   # Observed Data
   data_e <- data[which(S_e==1),]
   data_e$Select_Weights = 0.75*expit(gamma_ext[1] +  
@@ -161,7 +161,7 @@ simu_int_1<-function(data,gamma_int_1){
   # Generate Sampling Status
   SELECT <- expit(cbind(1,data$D,data$W_1,data$Z2,data$Z3)
                   %*% gamma_int_1)
-  S_i  <- ifelse(SELECT > U2i, T, F)
+  S_i  <- ifelse(SELECT > U2i, TRUE, FALSE)
   # Observed Data
   data_i <- data[which(S_i==1),]
   return(data_i)
@@ -173,7 +173,7 @@ simu_int_2<-function(data,gamma_int_2){
   # Generate Sampling Status
   SELECT <- expit(cbind(1,data$D,data$W_2,data$Z3)
                   %*% gamma_int_2)
-  S_i  <- ifelse(SELECT > U2i, T, F)
+  S_i  <- ifelse(SELECT > U2i, TRUE, FALSE)
   # Observed Data
   data_i <- data[which(S_i==1),]
   return(data_i)
@@ -186,7 +186,7 @@ simu_int_3<-function(data,gamma_int_3){
   # Generate Sampling Status
   SELECT <- expit(cbind(1,data$W_3,data$Z2)
                   %*% gamma_int_3)
-  S_i  <- ifelse(SELECT > U2i, T, F)
+  S_i  <- ifelse(SELECT > U2i, TRUE, FALSE)
   # Observed Data
   data_i <- data[which(S_i==1),]
   return(data_i)
@@ -333,7 +333,7 @@ simu_int_1<-function(data,gamma_int_1){
   # Generate Sampling Status
   SELECT <- expit(cbind(1,data$D,data$W_1,data$Z2,data$Z3)
                   %*% gamma_int_1)
-  S_i  <- ifelse(SELECT > U2i, T, F)
+  S_i  <- ifelse(SELECT > U2i, TRUE, FALSE)
   # Observed Data
   data_i <- data[which(S_i==1),]
   return(data_i)
@@ -344,7 +344,7 @@ simu_int_2<-function(data,gamma_int_2){
   # Generate Sampling Status
   SELECT <- expit(cbind(1,data$D,data$W_2,data$Z3)
                   %*% gamma_int_2)
-  S_i  <- ifelse(SELECT > U2i, T, F)
+  S_i  <- ifelse(SELECT > U2i, TRUE, FALSE)
   # Observed Data
   data_i <- data[which(S_i==1),]
   return(data_i)
@@ -357,7 +357,7 @@ simu_int_3<-function(data,gamma_int_3){
   # Generate Sampling Status
   SELECT <- expit(cbind(1,data$W_3,data$Z2)
                   %*% gamma_int_3)
-  S_i  <- ifelse(SELECT > U2i, T, F)
+  S_i  <- ifelse(SELECT > U2i, TRUE, FALSE)
   # Observed Data
   data_i <- data[which(S_i==1),]
   return(data_i)
