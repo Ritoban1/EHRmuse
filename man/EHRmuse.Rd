@@ -93,9 +93,6 @@ IPW and AIPW Methods for Multi-cohort Selection Bias in Non-probability Samples
 }
 \examples{
 #library(MASS)
-expit<-function(x){
-return(exp(x)/(1+exp(x)))
-}
 
 K=3 ## Number of Cohorts
 set.seed(100)

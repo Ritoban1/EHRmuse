@@ -6,10 +6,15 @@ Authors@R: c(
     person("Ritoban", "Kundu", , "kundur@umich.edu", role = c("aut")),
     person("Michael", "Kleinsasser", , "biostat-cran-manager@umich.edu", role = c("cre"))
   )
-Description: A set of tools for adjusting for selection bias in multi-cohort studies 
-    using joint IPW and AIPW methods. Includes weighted and unweighted logistic regression models 
-    and various variance estimation techniques. Please refer to Kundu et al. <doi:10.48550/arXiv.2412.00228>.
-License: MIT + file LICENSE
+Description: Comprehensive toolkit for addressing selection 
+    bias in binary disease models across diverse non-probability samples, each 
+    with unique selection mechanisms. It utilizes Inverse Probability Weighting 
+    (IPW) and Augmented Inverse Probability Weighting (AIPW) methods to reduce 
+    selection bias effectively in multiple non-probability cohorts by integrating 
+    data from either individual-level or summary-level external sources. The 
+    package also provides a variety of variance estimation techniques. Please 
+    refer to Kundu et al. <doi:10.48550/arXiv.2412.00228>.
+License: GPL (>= 2)
 URL: https://github.com/Ritoban1/EHRmuse
 BugReports: https://github.com/Ritoban1/EHRmuse/issues
 Depends:

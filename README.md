@@ -23,7 +23,8 @@ to address selection bias in non-probability samples, such as Electronic
 Health Records (EHRs). These methods leverage data integration
 techniques, incorporating either individual-level data or summary-level
 statistics from external sources, to improve the estimation of
-association parameters in binary disease risk models.
+association parameters in binary disease risk models. The link to the
+methods paper is: <https://arxiv.org/abs/2412.00228>.
 
 Selection bias poses significant challenges when working with EHR data,
 particularly when participants are recruited from multiple clinics or
@@ -40,8 +41,8 @@ robustness, effectively mitigating biases caused by misspecified
 selection models and improving the reliability of analysis in complex,
 non-probability sampling scenarios.
 
-Let $D$ be a binary disease indicator, and let $\mathbf{Z}$ denote a
-set of covariates. The primary disease model of interest in the target
+Let $D$ be a binary disease indicator, and let $\mathbf{Z}$ denote a set
+of covariates. The primary disease model of interest in the target
 population is:
 
 $$
@@ -52,28 +53,27 @@ We analyze data from $K$ internal non-probability samples (cohorts)
 drawn from the same target population. Each cohort $k$
 ($k = 1, 2, \ldots, K$) is characterized by a binary selection indicator
 $S_k$, which represents inclusion in the cohort. For each cohort $k$,
-$Z_{1k}$ denotes the subset of covariates that appear
-exclusively in the disease model and do not directly influence the
-corresponding selection indicator $S_k$. $Z_{2k}$ includes
-covariates shared by both the disease and selection models. Across all
-cohorts, the set of covariates $\mathbf{Z}$ is the union of
-$Z_{1k}$ and $Z_{2k}$. Additionally,
-$W_k$ represents variables specific to the selection model
-for cohort $k$, which can vary across cohorts. The probability of
-selection into cohort $k$, given covariates, is modeled as
-$P(S_k=1|X_k) = \pi_k(X_k)$, where
-$X_k$ includes $D$, $Z_{2k}$, and
-$W_k$.
+$Z_{1k}$ denotes the subset of covariates that appear exclusively in the
+disease model and do not directly influence the corresponding selection
+indicator $S_k$. $Z_{2k}$ includes covariates shared by both the disease
+and selection models. Across all cohorts, the set of covariates
+$\mathbf{Z}$ is the union of $Z_{1k}$ and $Z_{2k}$. Additionally, $W_k$
+represents variables specific to the selection model for cohort $k$,
+which can vary across cohorts. The probability of selection into cohort
+$k$, given covariates, is modeled as $P(S_k=1|X_k) = \pi_k(X_k)$, where
+$X_k$ includes $D$, $Z_{2k}$, and $W_k$.
 
 ## Data Generation
 
 The data is generated using the R script **“Data_gen_indi.R”**. For this
 example, we set the number of cohorts to $K = 3$, the population size to
 $N = 50{,}000$, and the dimension of the covariate vector to
-$\text{dim}(Z) = 3$. Different selection mechanisms are
-employed for the three cohorts to reflect cohort-specific variability.
-Additionally, we simulated individual-level external data to evaluate
-the methods JPL, JSR, and JAIPW, and generated marginal totals for JCL.
+$\text{dim}(Z) = 3$. Different selection mechanisms are employed for the
+three cohorts to reflect cohort-specific variability. Additionally, we
+simulated individual-level external data to evaluate the methods JPL
+(Joint Pseudolikelihood), JSR (Joint Simplex Regression), and JAIPW
+(Joint Augmented Inverse Probability Weighted), and generated marginal
+totals for JCL.
 
 ``` r
 expit<-function(x){

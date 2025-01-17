@@ -15,3 +15,6 @@ exp(x)/(1+exp(x))
 \description{
 Expit
 }
+\examples{
+expit(1)
+}

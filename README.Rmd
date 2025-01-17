@@ -87,13 +87,14 @@ $N = 50{,}000$, and the dimension of the covariate vector to
 $\text{dim}(Z) = 3$. Different selection mechanisms are
 employed for the three cohorts to reflect cohort-specific variability.
 Additionally, we simulated individual-level external data to evaluate
-the methods JPL, JSR, and JAIPW, and generated marginal totals for JCL.
+the methods JPL (Joint Pseudolikelihood), JSR (Joint Simplex Regression), 
+and JAIPW (Joint Augmented Inverse Probability Weighted), and generated marginal totals for JCL.
 
 
 ```{r,eval=FALSE}
-expit<-function(x){
-  return(exp(x)/(1+exp(x)))
-}
+# expit<-function(x){
+#   return(exp(x)/(1+exp(x)))
+# }
 
 K=3 ## Number of Cohorts
 set.seed(100)
@@ -275,9 +276,9 @@ res_pl
 The data is generated using the R script **"Data_gen_marg.R"**
 
 ```{r,eval=FALSE}
-expit<-function(x){
-  return(exp(x)/(1+exp(x)))
-}
+# expit<-function(x){
+#   return(exp(x)/(1+exp(x)))
+# }
 K=3 ## Number of cohorts
 set.seed(100)
 mean_w_p=0

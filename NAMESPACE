@@ -1,4 +1,5 @@
 export(EHRmuse)
+export(expit)
 
 importFrom(dplyr, select, all_of)
 importFrom(magrittr, "%>%")

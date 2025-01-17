@@ -1,13 +1,13 @@
 PL_wt_multi_cohort <- function(K,intdata_list,extdata,select_var_list,Weights_e){
-  expit<-function(x){
-    return(exp(x)/(1+exp(x)))
-  }
+  # expit<-function(x){
+  #   return(exp(x)/(1+exp(x)))
+  # }
   # Initialize lists to store results for each cohort
   estweights_list <- list()
   gamma_estimates <- list()
   
   # Define expit function if not already defined
-  expit <- function(x) 1 / (1 + exp(-x))
+  # expit <- function(x) 1 / (1 + exp(-x))
   
   # Loop over each cohort
   for (k in 1:K){

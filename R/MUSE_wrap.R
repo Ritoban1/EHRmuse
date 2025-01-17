@@ -48,9 +48,6 @@
 #'
 #' @examples
 #' #library(MASS)
-#' expit<-function(x){
-#' return(exp(x)/(1+exp(x)))
-#' }
 #' 
 #' K=3 ## Number of Cohorts
 #' set.seed(100)
@@ -212,7 +209,7 @@ EHRmuse<-function(K,Z_names,intdata_list,
   # require(dplyr)
   # require(nnet)
   
-  print("Please rename the outcome variable to be D.")
+  message("Please rename the outcome variable to be D.")
   
   if(!is.numeric(K)||!(K>0))
     stop("K, the number of cohorts should be a positive integer.")
@@ -308,7 +305,7 @@ EHRmuse<-function(K,Z_names,intdata_list,
         # source("SR_estimation.R")
         
         if(variance==TRUE){
-          print("Only approx method of variance is available for SR")
+          message("Only approx method of variance is available for SR")
           est_SR_var=SR_est_var_multi_cohort(K,intdata_list,extdata,select_var_list,Weights_e,Z_names)
           
           return(list(est=est_SR_var$final_est,var=est_SR_var$variance_est))

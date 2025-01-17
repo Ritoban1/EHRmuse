@@ -1,7 +1,7 @@
 CL_wt_multi_cohort <- function(K,intdata_list,select_var_list,marginals_list){
-  expit<-function(x){
-    return(exp(x)/(1+exp(x)))
-  }
+  # expit<-function(x){
+  #   return(exp(x)/(1+exp(x)))
+  # }
 
   
   # Initialize lists to store results for each cohort
@@ -9,7 +9,7 @@ CL_wt_multi_cohort <- function(K,intdata_list,select_var_list,marginals_list){
   gamma_estimates <- list()
   
   # Define expit function if not already defined
-  expit <- function(x) 1 / (1 + exp(-x))
+  # expit <- function(x) 1 / (1 + exp(-x))
   
   for (k in 1:K){
     intdata=intdata_list[[k]]
