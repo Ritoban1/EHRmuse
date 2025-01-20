@@ -158,7 +158,7 @@ AIPW_var_approx<-function(K,N,intdata_list,extdata,
   
   for(i in 1:nrow(var_est)){
     if(var_est[i,i]<0){
-      var_est[i,i]=(est_AIPW$init_var)[i,i]
+      var_est[i,i]=(est_AIPW$init_var)[i]
     }
   }
   return(list(est=est_AIPW$est,var=diag(var_est)))
