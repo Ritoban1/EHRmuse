@@ -154,7 +154,7 @@ AIPW_var_approx<-function(K,N,intdata_list,extdata,
   
   G_theta=(est_AIPW$jac)
   
-  var_est=1/N *solve(G_theta) %*% E %*% solve(G_theta)
+  var_est=1/N *solve(G_theta) %*% E %*% t(solve(G_theta))
   
   for(i in 1:nrow(var_est)){
     if(var_est[i,i]<0){
