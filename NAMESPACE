@@ -1,5 +1,6 @@
 export(EHRmuse)
 export(expit)
+useDynLib(EHRmuse)
 
 importFrom(dplyr, select, all_of)
 importFrom(magrittr, "%>%")
@@ -7,7 +8,25 @@ importFrom(stats, glm, quasibinomial, coef, as.formula)
 importFrom(survey, svydesign, svyglm)
 importFrom(nleqslv, nleqslv)
 importFrom(xgboost, xgb.DMatrix, xgboost)
-importFrom(simplexreg, simplexreg)
+
 importFrom(MASS, mvrnorm)
 importFrom(nnet, multinom)
 importFrom("stats", "predict", "relevel")
+
+#exportPattern(dsim, qsim, psim, rsim, simplexreg, simplexreg.fit, corplot,
+#	simplexreg.control)
+import("Formula")
+import("plotrix")
+import("stats")
+importFrom("graphics", "abline", "plot")
+
+#S3method("print", "EHRmuse")
+#S3method("summary", "EHRmuse")
+#S3method("logLik", "EHRmuse")
+#S3method("coef", "EHRmuse")
+#S3method("vcov", "EHRmuse")
+#S3method("residuals", "EHRmuse")
+#S3method("predict", "EHRmuse")
+#S3method("plot", "EHRmuse")
+#S3method("print", "summary.simplexreg")
+#S3method("nobs", "EHRmuse")
