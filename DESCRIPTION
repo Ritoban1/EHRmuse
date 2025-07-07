@@ -1,7 +1,7 @@
 Type: Package
 Package: EHRmuse
 Title: Multi-Cohort Selection Bias Correction using IPW and AIPW Methods
-Version: 0.0.2.0
+Version: 0.0.2.2
 Authors@R: c(
     person("Ritoban", "Kundu", , "kundur@umich.edu", role = c("aut")),
     person("Michael", "Kleinsasser", , "biostat-cran-manager@umich.edu", role = c("cre"))
