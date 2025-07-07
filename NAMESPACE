@@ -1,6 +1,6 @@
 export(EHRmuse)
 export(expit)
-useDynLib(EHRmuse)
+useDynLib(EHRmuse, .registration = TRUE)
 
 importFrom(dplyr, select, all_of)
 importFrom(magrittr, "%>%")
