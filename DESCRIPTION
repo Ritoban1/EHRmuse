@@ -20,6 +20,8 @@ BugReports: https://github.com/Ritoban1/EHRmuse/issues
 Depends:
     R (>= 4.0.0)
 Imports:
+    Formula, 
+    plotrix,
     dplyr (>= 1.0.0),
     magrittr,
     MASS,
@@ -27,8 +29,9 @@ Imports:
     xgboost (>= 1.4.1),
     survey (>= 4.1.0),
     stats,
-    nnet (>= 7.3-17),
-    simplexreg (>= 0.1.6)
+    graphics,
+    nnet (>= 7.3-17)
+SystemRequirements: GNU Scientific Library version >= 1.8
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
